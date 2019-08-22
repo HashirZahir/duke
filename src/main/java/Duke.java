@@ -76,7 +76,7 @@ public class Duke {
     public void listReply() {
         int currIndex = 1;
         for (Task task : this.taskArrayList) {
-            System.out.println(currIndex + ". " + task.name);
+            System.out.println(currIndex + ". " + task);
             currIndex += 1;
         }
     }
