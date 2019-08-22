@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
@@ -12,7 +13,7 @@ public class Duke {
     private static final String triggerQuitText = "bye";
 
     public static void main(String[] args) {
-        Duke duke = new Duke(replyModeType.ECHO);
+        Duke duke = new Duke();
         Scanner scanner = new Scanner(System.in);
         String inputStr = "";
 
@@ -21,82 +22,45 @@ public class Duke {
         while (true) {
             if (scanner.hasNextLine()) {
                 inputStr = scanner.nextLine();
-                if (inputStr.equals(triggerQuitText)) break;
-                duke.reply(inputStr);
+                if (!duke.reply(inputStr)) break;
             }
         }
-
-        duke.quit();
-
     }
 
-
-    enum replyModeType{
-        ECHO,
-        ADD,
-        MARK
-    }
-
-    replyModeType replyMode;
-    String inputStr;
-
-    public Duke(replyModeType replyMode) {
-        this.replyMode = replyMode;
-        this.inputStr="";
-    }
-
-    public replyModeType getReplyMode() {
-        return this.replyMode;
-    }
-
-    public void setReplyMode(replyModeType replyMode) {
-        this.replyMode = replyMode;
+    public Duke() {
     }
 
     public void greeting() {
         System.out.println(welcomeMsg);
     }
 
-    public void quit() {
-        setReplyMode(replyModeType.ECHO);
-        reply(quitMsg);
-    }
-
-    public void reply(String input) {
+    public boolean reply(String inputStr) {
         // TODO: check if whitespace is considered as input.
-        if (input.isEmpty()) {
-            return;
+        if (inputStr.isEmpty()) {
+            return true;
+        }
+
+        boolean isQuit = false;
+        final String horizontalSeparator = "______________________________________";
+        System.out.println(horizontalSeparator);
+
+        if (inputStr.equals(triggerQuitText)) {
+            isQuit = true;
+            System.out.println(quitMsg);
         }
         else {
-            this.inputStr = input;
-        }
-
-        final String horizontalSeparator = "______________________________________";
-
-        System.out.println(horizontalSeparator);
-
-        switch(replyMode) {
-            default:
-            case ECHO:
-                echoReply();
-                break;
-            case ADD:
-                addReply();
-                break;
-            case MARK:
-                markReply();
-                break;
+            echoReply(inputStr);
         }
 
         System.out.println(horizontalSeparator);
+        return !isQuit;
     }
 
-    public void echoReply() {
-        System.out.println(this.inputStr);
+    public void echoReply(String inputStr) {
+        System.out.println(inputStr);
     }
 
-    public void addReply() {
-
+    public void addReply(String taskName) {
     }
 
     public void markReply() {
@@ -104,6 +68,4 @@ public class Duke {
     }
 }
 
-/**public class Task{
 
-}**/
