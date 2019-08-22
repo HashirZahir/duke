@@ -9,6 +9,7 @@ public class Duke {
             + "|____/ \\__,_|_|\\_\\___|\n";
 
     private static final String welcomeMsg = "Hello from " + logo + "What can I do for you today?";
+    private static final String triggerListText = "list";
     private static final String quitMsg = "Bye. Hope to see you again!\n" + logo;
     private static final String triggerQuitText = "bye";
 
@@ -52,6 +53,9 @@ public class Duke {
             isQuit = true;
             System.out.println(quitMsg);
         }
+        else if (inputStr.equals(triggerListText)) {
+            listReply();
+        }
         else {
             addReply(inputStr);
         }
@@ -69,6 +73,13 @@ public class Duke {
         System.out.println("added: " + taskName);
     }
 
+    public void listReply() {
+        int currIndex = 1;
+        for (Task task : this.taskArrayList) {
+            System.out.println(currIndex + ". " + task.name);
+            currIndex += 1;
+        }
+    }
     public void markReply() {
 
     }
