@@ -27,7 +27,11 @@ public class Duke {
         }
     }
 
+
+    ArrayList<Task> taskArrayList;
+
     public Duke() {
+        this.taskArrayList = new ArrayList<Task>();
     }
 
     public void greeting() {
@@ -49,7 +53,7 @@ public class Duke {
             System.out.println(quitMsg);
         }
         else {
-            echoReply(inputStr);
+            addReply(inputStr);
         }
 
         System.out.println(horizontalSeparator);
@@ -61,6 +65,8 @@ public class Duke {
     }
 
     public void addReply(String taskName) {
+        this.taskArrayList.add(new Task(taskName));
+        System.out.println("added: " + taskName);
     }
 
     public void markReply() {
