@@ -9,8 +9,10 @@ public class Duke {
             + "|____/ \\__,_|_|\\_\\___|\n";
 
     private static final String welcomeMsg = "Hello from " + logo + "What can I do for you today?";
-    private static final String triggerListText = "list";
     private static final String quitMsg = "Bye. Hope to see you again!\n" + logo;
+    private static final String markAsDoneMsg = "Nice! I've marked this task as done:\n";
+    private static final String triggerListText = "list";
+    private static final String triggerDoneText = "done";
     private static final String triggerQuitText = "bye";
 
     public static void main(String[] args) {
@@ -48,6 +50,7 @@ public class Duke {
         boolean isQuit = false;
         final String horizontalSeparator = "______________________________________";
         System.out.println(horizontalSeparator);
+        String[] splitStr = inputStr.split(" ");
 
         if (inputStr.equals(triggerQuitText)) {
             isQuit = true;
@@ -55,6 +58,9 @@ public class Duke {
         }
         else if (inputStr.equals(triggerListText)) {
             listReply();
+        }
+        else if (splitStr.length >=2 && splitStr[0].equals(triggerDoneText)) {
+            markReply(splitStr[1]);
         }
         else {
             addReply(inputStr);
@@ -80,8 +86,20 @@ public class Duke {
             currIndex += 1;
         }
     }
-    public void markReply() {
-
+    public void markReply(String indexStr) {
+        if(indexStr.matches("^[0-9]+$")) {
+            int index = Integer.parseInt(indexStr) - 1;
+            if (index >= 0 && index < this.taskArrayList.size()) {
+                this.taskArrayList.get(index).markTaskDone();
+                System.out.println(markAsDoneMsg + this.taskArrayList.get(index));
+            }
+            else {
+                System.out.println("Index provided is out of range. Cannot mark as done");
+            }
+        }
+        else {
+            System.out.println("Improper 'Done' command given. Please follow: done [integer].\n example: done 2");
+        }
     }
 }
 
