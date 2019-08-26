@@ -11,9 +11,9 @@ public class Duke {
     private static final String welcomeMsg = "Hello from " + logo + "What can I do for you today?";
     private static final String quitMsg = "Bye. Hope to see you again!\n" + logo;
     private static final String markAsDoneMsg = "Nice! I've marked this task as done:\n";
-    private static final String triggerListText = "list";
-    private static final String triggerDoneText = "done";
-    private static final String triggerQuitText = "bye";
+    private static final String taskAddedMsg = "Got it. I've added this task: \n";
+
+    private CommandParser commandParser;
 
     public static void main(String[] args) {
         Duke duke = new Duke();
@@ -34,6 +34,7 @@ public class Duke {
     ArrayList<Task> taskArrayList;
 
     public Duke() {
+        this.commandParser = new CommandParser();
         this.taskArrayList = new ArrayList<Task>();
     }
 
@@ -50,20 +51,25 @@ public class Duke {
         boolean isQuit = false;
         final String horizontalSeparator = "______________________________________";
         System.out.println(horizontalSeparator);
-        String[] splitStr = inputStr.split(" ");
 
-        if (inputStr.equals(triggerQuitText)) {
-            isQuit = true;
-            System.out.println(quitMsg);
-        }
-        else if (inputStr.equals(triggerListText)) {
-            listReply();
-        }
-        else if (splitStr.length >=2 && splitStr[0].equals(triggerDoneText)) {
-            markReply(splitStr[1]);
-        }
-        else {
-            addReply(inputStr);
+        commandParser.setInputStr(inputStr);
+        CommandParser.commandType command = commandParser.getCommandType();
+        ArrayList<String> commandArgs = commandParser.getArgs();
+
+        switch(command) {
+            case QUIT:
+                isQuit = true;
+                System.out.println(quitMsg);
+                break;
+            case LIST:
+                listReply();
+                break;
+            case MARKDONE:
+                markReply(commandArgs.get(0));
+                break;
+            case DEFAULT:
+                addReply(inputStr);
+                break;
         }
 
         System.out.println(horizontalSeparator);
@@ -76,7 +82,7 @@ public class Duke {
 
     public void addReply(String taskName) {
         this.taskArrayList.add(new Task(taskName));
-        System.out.println("added: " + taskName);
+        System.out.println(taskAddedMsg+taskName);
     }
 
     public void listReply() {
