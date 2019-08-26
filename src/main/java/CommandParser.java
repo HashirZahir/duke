@@ -6,12 +6,12 @@ public class CommandParser {
         LIST,
         QUIT,
         MARKDONE,
+        TODO,
         DEFAULT
     }
 
-    private static final String triggerListText = "list";
-    private static final String triggerDoneText = "done";
-    private static final String triggerQuitText = "bye";
+    private static final String triggerListText = "list", triggerDoneText = "done",
+                                triggerQuitText = "bye", triggerTodoText = "todo";
 
     private String inputStr, argStr;
 
@@ -39,6 +39,9 @@ public class CommandParser {
         }
         else if (command.equals(triggerDoneText)) {
             return commandType.MARKDONE;
+        }
+        else if (command.equals(triggerTodoText)) {
+            return commandType.TODO;
         }
 
         return commandType.DEFAULT;

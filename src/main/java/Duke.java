@@ -12,6 +12,7 @@ public class Duke {
     private static final String quitMsg = "Bye. Hope to see you again!\n" + logo;
     private static final String markAsDoneMsg = "Nice! I've marked this task as done:\n";
     private static final String taskAddedMsg = "Got it. I've added this task: \n";
+    private static final String numberOfTasksMsg_1 = "Now you have ", getNumberOfTasksMsg_2 = " tasks in the list";
 
     private CommandParser commandParser;
 
@@ -55,6 +56,7 @@ public class Duke {
         commandParser.setInputStr(inputStr);
         CommandParser.commandType command = commandParser.getCommandType();
         ArrayList<String> commandArgs = commandParser.getArgs();
+        Task t;
 
         switch(command) {
             case QUIT:
@@ -67,8 +69,14 @@ public class Duke {
             case MARKDONE:
                 markReply(commandArgs.get(0));
                 break;
+            case TODO:
+                String todoTaskName = commandArgs.get(0);
+                t = new Todo(todoTaskName);
+                addReply(t);
+                break;
             case DEFAULT:
-                addReply(inputStr);
+                t = new Task(inputStr);
+                addReply(t);
                 break;
         }
 
@@ -80,15 +88,16 @@ public class Duke {
         System.out.println(inputStr);
     }
 
-    public void addReply(String taskName) {
-        this.taskArrayList.add(new Task(taskName));
-        System.out.println(taskAddedMsg+taskName);
+    public void addReply(Task task) {
+        this.taskArrayList.add(task);
+        System.out.println(taskAddedMsg + task + numberOfTasksMsg_1 + this.taskArrayList.size() + getNumberOfTasksMsg_2);
+
     }
 
     public void listReply() {
         int currIndex = 1;
         for (Task task : this.taskArrayList) {
-            System.out.println(currIndex + ". " + task);
+            System.out.print(currIndex + ". " + task);
             currIndex += 1;
         }
     }
@@ -97,7 +106,7 @@ public class Duke {
             int index = Integer.parseInt(indexStr) - 1;
             if (index >= 0 && index < this.taskArrayList.size()) {
                 this.taskArrayList.get(index).markTaskDone();
-                System.out.println(markAsDoneMsg + this.taskArrayList.get(index));
+                System.out.print(markAsDoneMsg + this.taskArrayList.get(index));
             }
             else {
                 System.out.println("Index provided is out of range. Cannot mark as done");
