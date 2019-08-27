@@ -3,11 +3,11 @@ public class Deadline extends Task{
     String dayStr;
 
     public Deadline(String descriptionStr, String dayStr){
-        super(descriptionStr);
+        super(descriptionStr, "D", dayStr);
         this.dayStr = dayStr;
     }
 
     public String toString() {
-        return "[D]" + super.toString() + "(" + this.dayStr + ")";
+        return super.toString() + "(" + this.dayStr + ")";
     }
 }
