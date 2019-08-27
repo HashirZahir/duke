@@ -83,7 +83,7 @@ public class CommandParser {
             case LIST:
                 return "list";
             case QUIT:
-                return "quit";
+                return "bye";
             case MARKDONE:
                 return "done";
             case TODO:
