@@ -15,13 +15,17 @@ public class Duke {
     private static final String numberOfTasksMsg_1 = "Now you have ", getNumberOfTaskMsg_2 = " task",
                                 getNumberOfTasksMsg_2 = " tasks", getGetNumberOfTasksMsg_3 = " in the list";
 
+    private static FileIOManager fileIOManager;
+    private static ArrayList<Task> taskArrayList;
     private CommandParser commandParser;
 
     public static void main(String[] args) {
         Duke duke = new Duke();
+        fileIOManager = new FileIOManager();
         Scanner scanner = new Scanner(System.in);
         String inputStr = "";
 
+        taskArrayList = fileIOManager.loadSavedData();
         duke.greeting();
 
         while (true) {
@@ -31,9 +35,6 @@ public class Duke {
             }
         }
     }
-
-
-    ArrayList<Task> taskArrayList;
 
     public Duke() {
         this.commandParser = new CommandParser();
@@ -100,6 +101,7 @@ public class Duke {
         taskText = taskAddedMsg + task + "\n" + numberOfTasksMsg_1 + this.taskArrayList.size() + taskText + getGetNumberOfTasksMsg_3;
         System.out.println(taskText);
 
+        fileIOManager.saveData(this.taskArrayList);
     }
 
     public void listReply() {
@@ -123,6 +125,8 @@ public class Duke {
         else {
             System.out.println("Improper 'Done' command given. Please follow: done [integer].\n example: done 2");
         }
+
+        fileIOManager.saveData(this.taskArrayList);
     }
 }
 
