@@ -21,7 +21,7 @@ public class Task{
             outStr += "[✗] ";
         }
 
-        outStr += this.name + "\n";
+        outStr += this.name;
         return outStr;
     }
 }

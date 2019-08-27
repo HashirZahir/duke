@@ -55,7 +55,7 @@ public class Duke {
 
         commandParser.setInputStr(inputStr);
         CommandParser.commandType command = commandParser.getCommandType();
-        ArrayList<String> commandArgs = commandParser.getArgs();
+        String[] commandArgs = commandParser.getArgs();
         Task t;
 
         switch(command) {
@@ -67,11 +67,14 @@ public class Duke {
                 listReply();
                 break;
             case MARKDONE:
-                markReply(commandArgs.get(0));
+                markReply(commandArgs[0]);
                 break;
             case TODO:
-                String todoTaskName = commandArgs.get(0);
-                t = new Todo(todoTaskName);
+                t = new Todo(commandArgs[0]);
+                addReply(t);
+                break;
+            case DEADLINE:
+                t = new Deadline(commandArgs[0], commandArgs[1]);
                 addReply(t);
                 break;
             case DEFAULT:
@@ -90,14 +93,14 @@ public class Duke {
 
     public void addReply(Task task) {
         this.taskArrayList.add(task);
-        System.out.println(taskAddedMsg + task + numberOfTasksMsg_1 + this.taskArrayList.size() + getNumberOfTasksMsg_2);
+        System.out.println(taskAddedMsg + task + "\n" + numberOfTasksMsg_1 + this.taskArrayList.size() + getNumberOfTasksMsg_2);
 
     }
 
     public void listReply() {
         int currIndex = 1;
         for (Task task : this.taskArrayList) {
-            System.out.print(currIndex + ". " + task);
+            System.out.println(currIndex + ". " + task);
             currIndex += 1;
         }
     }
@@ -106,7 +109,7 @@ public class Duke {
             int index = Integer.parseInt(indexStr) - 1;
             if (index >= 0 && index < this.taskArrayList.size()) {
                 this.taskArrayList.get(index).markTaskDone();
-                System.out.print(markAsDoneMsg + this.taskArrayList.get(index));
+                System.out.println(markAsDoneMsg + this.taskArrayList.get(index));
             }
             else {
                 System.out.println("Index provided is out of range. Cannot mark as done");
