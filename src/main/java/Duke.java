@@ -82,6 +82,8 @@ public class Duke {
                 t = new Event(commandArgs[0], commandArgs[1]);
                 addReply(t);
                 break;
+            case IGNORE:
+                break;
         }
 
         System.out.println(horizontalSeparator);

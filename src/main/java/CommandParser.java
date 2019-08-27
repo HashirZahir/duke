@@ -9,6 +9,7 @@ public class CommandParser {
         TODO,
         DEADLINE,
         EVENT,
+        IGNORE,
         DEFAULT
     }
 
@@ -33,6 +34,7 @@ public class CommandParser {
             process();
         }
         catch (DukeException e) {
+            this.command = commandType.IGNORE;
             System.out.println(e);
         }
     }
@@ -77,15 +79,44 @@ public class CommandParser {
        return this.command;
     }
 
-    private void setArgs(String argStr) {
+    public String getCommandText() {
+        switch(this.command) {
+            case LIST:
+                return "list";
+            case QUIT:
+                return "quit";
+            case MARKDONE:
+                return "done";
+            case TODO:
+                return "todo";
+            case DEADLINE:
+                return "deadline";
+            case EVENT:
+                return "event";
+            default:
+                return "unknown";
+        }
+    }
+
+    private void setArgs(String argStr) throws DukeException {
 
         switch(this.command) {
             case DEADLINE:
+                if (argStr.isBlank()) {
+                    throw new DukeException(DukeException.dukeExceptionType.DEADLINE_EMPTY, this.getCommandText());
+                }
             case EVENT:
+                if (argStr.isBlank()) {
+                    throw new DukeException(DukeException.dukeExceptionType.EVENT_EMPTY, this.getCommandText());
+                }
                 this.argStrArr = argStr.split(this.splitText);
                 String deadlineText = this.splitText.split("/")[1];
                 this.argStrArr[1] = deadlineText + this.argStrArr[1];
                 break;
+            case TODO:
+                if (argStr.isBlank()) {
+                    throw new DukeException(DukeException.dukeExceptionType.TODO_EMPTY, this.getCommandText());
+                }
             default:
                 this.argStrArr = new String[]{argStr};
                 break;
