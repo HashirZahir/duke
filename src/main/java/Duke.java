@@ -82,10 +82,6 @@ public class Duke {
                 t = new Event(commandArgs[0], commandArgs[1]);
                 addReply(t);
                 break;
-            case DEFAULT:
-                t = new Task(inputStr);
-                addReply(t);
-                break;
         }
 
         System.out.println(horizontalSeparator);

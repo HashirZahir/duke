@@ -28,10 +28,16 @@ public class CommandParser {
 
     public void setInputStr(String inputStr) {
         this.inputStr = inputStr;
-        process();
+
+        try {
+            process();
+        }
+        catch (DukeException e) {
+            System.out.println(e);
+        }
     }
 
-    private void process() {
+    private void process() throws DukeException{
         String[] splitStr = this.inputStr.split(" ");
         String command = splitStr[0];
         String restOfStr = "";
@@ -61,7 +67,7 @@ public class CommandParser {
             this.splitText = splitEventText;
         }
         else {
-            this.command = commandType.DEFAULT;
+            throw new DukeException(DukeException.dukeExceptionType.UNKNOWN);
         }
 
         setArgs(restOfStr);
