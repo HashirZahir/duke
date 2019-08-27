@@ -12,7 +12,8 @@ public class Duke {
     private static final String quitMsg = "Bye. Hope to see you again!\n" + logo;
     private static final String markAsDoneMsg = "Nice! I've marked this task as done:\n";
     private static final String taskAddedMsg = "Got it. I've added this task: \n";
-    private static final String numberOfTasksMsg_1 = "Now you have ", getNumberOfTasksMsg_2 = " tasks in the list";
+    private static final String numberOfTasksMsg_1 = "Now you have ", getNumberOfTaskMsg_2 = " task",
+                                getNumberOfTasksMsg_2 = " tasks", getGetNumberOfTasksMsg_3 = " in the list";
 
     private CommandParser commandParser;
 
@@ -77,6 +78,10 @@ public class Duke {
                 t = new Deadline(commandArgs[0], commandArgs[1]);
                 addReply(t);
                 break;
+            case EVENT:
+                t = new Event(commandArgs[0], commandArgs[1]);
+                addReply(t);
+                break;
             case DEFAULT:
                 t = new Task(inputStr);
                 addReply(t);
@@ -93,7 +98,9 @@ public class Duke {
 
     public void addReply(Task task) {
         this.taskArrayList.add(task);
-        System.out.println(taskAddedMsg + task + "\n" + numberOfTasksMsg_1 + this.taskArrayList.size() + getNumberOfTasksMsg_2);
+        String taskText = (this.taskArrayList.size()>1) ? getNumberOfTasksMsg_2 : getNumberOfTaskMsg_2;
+        taskText = taskAddedMsg + task + "\n" + numberOfTasksMsg_1 + this.taskArrayList.size() + taskText + getGetNumberOfTasksMsg_3;
+        System.out.println(taskText);
 
     }
 

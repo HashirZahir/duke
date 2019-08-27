@@ -8,20 +8,22 @@ public class CommandParser {
         MARKDONE,
         TODO,
         DEADLINE,
+        EVENT,
         DEFAULT
     }
 
     private static final String triggerListText = "list", triggerDoneText = "done",
                                 triggerQuitText = "bye", triggerTodoText = "todo",
-                                triggerDeadlineText = "deadline";
-    public static final String splitDeadlineText = "/by ";
+                                triggerDeadlineText = "deadline", triggerEventText = "event";
+    public static final String splitDeadlineText = "/by ", splitEventText = "/at ";
 
-    private String inputStr;
+    private String inputStr, splitText;
     private String[] argStrArr;
     private commandType command;
 
     public CommandParser() {
         this.command = commandType.DEFAULT;
+        this.splitText = " ";
     }
 
     public void setInputStr(String inputStr) {
@@ -52,6 +54,11 @@ public class CommandParser {
         }
         else if (command.equals(triggerDeadlineText)) {
             this.command = commandType.DEADLINE;
+            this.splitText = splitDeadlineText;
+        }
+        else if (command.equals(triggerEventText)) {
+            this.command = commandType.EVENT;
+            this.splitText = splitEventText;
         }
         else {
             this.command = commandType.DEFAULT;
@@ -65,10 +72,12 @@ public class CommandParser {
     }
 
     private void setArgs(String argStr) {
+
         switch(this.command) {
             case DEADLINE:
-                this.argStrArr = argStr.split(splitDeadlineText);
-                String deadlineText = splitDeadlineText.split("/")[1];
+            case EVENT:
+                this.argStrArr = argStr.split(this.splitText);
+                String deadlineText = this.splitText.split("/")[1];
                 this.argStrArr[1] = deadlineText + this.argStrArr[1];
                 break;
             default:
