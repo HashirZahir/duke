@@ -99,25 +99,42 @@ public class CommandParser {
 
     private void setArgs(String argStr) throws DukeException {
 
-        switch(this.command) {
-            case DEADLINE:
-                if (argStr.isBlank()) {
-                    throw new DukeException(DukeException.dukeExceptionType.DEADLINE_EMPTY, this.getCommandText());
+        if (this.command == commandType.DEADLINE || this.command == commandType.EVENT) {
+            String[] splitStr = argStr.split(this.splitText);
+            if (argStr.isBlank() || splitStr[0].isBlank()) {
+                if (this.command == commandType.DEADLINE) {
+                    throw new DukeException(DukeException.dukeExceptionType.DEADLINE_DESC_EMPTY, this.getCommandText());
                 }
-            case EVENT:
-                if (argStr.isBlank()) {
-                    throw new DukeException(DukeException.dukeExceptionType.EVENT_EMPTY, this.getCommandText());
+                else if (this.command == commandType.EVENT) {
+                    throw new DukeException(DukeException.dukeExceptionType.EVENT_DESC_EMPTY, this.getCommandText());
                 }
+            }
+            else if (splitStr.length <= 1) {
+                if (this.command == commandType.DEADLINE) {
+                    throw new DukeException(DukeException.dukeExceptionType.DEADLINE_DATE_EMPTY, this.getCommandText());
+                }
+                else if (this.command == commandType.EVENT) {
+                    throw new DukeException(DukeException.dukeExceptionType.EVENT_DATE_EMPTY, this.getCommandText());
+                }
+            }
+            else {
                 this.argStrArr = argStr.split(this.splitText);
-                break;
-            case TODO:
-                if (argStr.isBlank()) {
-                    throw new DukeException(DukeException.dukeExceptionType.TODO_EMPTY, this.getCommandText());
-                }
-            default:
-                this.argStrArr = new String[]{argStr};
-                break;
+            }
+
         }
+        else if (this.command == commandType.TODO) {
+            if (argStr.isBlank()) {
+                throw new DukeException(DukeException.dukeExceptionType.TODO_DESC_EMPTY, this.getCommandText());
+            }
+            else {
+                this.argStrArr = new String[]{argStr};
+            }
+        }
+        else {
+            this.argStrArr = new String[]{argStr};
+        }
+
+
     }
 
     public String[] getArgs() {

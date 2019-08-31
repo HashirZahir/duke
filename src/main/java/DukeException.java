@@ -1,15 +1,18 @@
 public class DukeException extends Exception{
     enum dukeExceptionType {
-        EVENT_EMPTY,
-        DEADLINE_EMPTY,
-        TODO_EMPTY,
+        EVENT_DESC_EMPTY,
+        DEADLINE_DESC_EMPTY,
+        TODO_DESC_EMPTY,
+        EVENT_DATE_EMPTY,
+        DEADLINE_DATE_EMPTY,
         UNKNOWN
     }
 
-    private static final String unknownErrText = "☹ OOPS!!! I'm sorry, but I don't know what that means :-(",
+    private static final String unknownErrText = "☹ OOPS!!! I'm sorry, but I don't know what that means :-(\n",
                                 knownCommands = "Please type one of these recognized commands:\nlist\ntodo\ndeadline\nevent\nbye",
-                                emptyErrText_1 = "☹ OOPS!!! The description of a ",
-                                emptyErrText_2 = " cannot be empty.";
+                                emptyErrText1 = "☹ OOPS!!! The description of a ",
+                                emptyDateErrText1 = "☹ OOPS!!! The date of a ",
+                                emptyErrText2 = " cannot be empty.";
 
     String errText, commandStr;
 
@@ -25,10 +28,14 @@ public class DukeException extends Exception{
 
     private void setExceptionText(dukeExceptionType det, String commandStr) {
         switch (det) {
-            case TODO_EMPTY:
-            case EVENT_EMPTY:
-            case DEADLINE_EMPTY:
-                this.errText = getEmptyText(commandStr);
+            case TODO_DESC_EMPTY:
+            case EVENT_DESC_EMPTY:
+            case DEADLINE_DESC_EMPTY:
+                this.errText = getEmptyDescText(commandStr);
+                break;
+            case EVENT_DATE_EMPTY:
+            case DEADLINE_DATE_EMPTY:
+                this.errText = getEmptyDateText(commandStr);
                 break;
             case UNKNOWN:
                 this.errText = unknownErrText + knownCommands;
@@ -36,8 +43,12 @@ public class DukeException extends Exception{
         }
     }
 
-    private String getEmptyText(String command) {
-        return emptyErrText_1 + command + emptyErrText_2;
+    private String getEmptyDescText(String command) {
+        return emptyErrText1 + command + emptyErrText2;
+    }
+
+    private String getEmptyDateText(String command) {
+        return emptyDateErrText1 + command + emptyErrText2;
     }
 
     public String toString() {
