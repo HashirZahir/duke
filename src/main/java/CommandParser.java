@@ -109,8 +109,6 @@ public class CommandParser {
                     throw new DukeException(DukeException.dukeExceptionType.EVENT_EMPTY, this.getCommandText());
                 }
                 this.argStrArr = argStr.split(this.splitText);
-                String deadlineText = this.splitText.split("/")[1];
-                this.argStrArr[1] = deadlineText + this.argStrArr[1];
                 break;
             case TODO:
                 if (argStr.isBlank()) {
