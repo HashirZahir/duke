@@ -66,7 +66,7 @@ public class Duke {
                 System.out.println(quitMsg);
                 break;
             case LIST:
-                listReply();
+                listReply(this.taskArrayList);
                 break;
             case MARKDONE:
                 markReply(commandArgs[0]);
@@ -82,6 +82,9 @@ public class Duke {
             case EVENT:
                 t = new Event(commandArgs[0], commandArgs[1]);
                 addReply(t);
+                break;
+            case FIND:
+                findTask(commandArgs[0]);
                 break;
             case IGNORE:
                 break;
@@ -104,9 +107,9 @@ public class Duke {
         fileIOManager.saveData(this.taskArrayList);
     }
 
-    public void listReply() {
+    public void listReply(ArrayList<Task> taskArrayList) {
         int currIndex = 1;
-        for (Task task : this.taskArrayList) {
+        for (Task task : taskArrayList) {
             System.out.println(currIndex + ". " + task);
             currIndex += 1;
         }
@@ -127,6 +130,23 @@ public class Duke {
         }
 
         fileIOManager.saveData(this.taskArrayList);
+    }
+
+    private void findTask(String findStr) {
+        ArrayList<Task> foundTaskList = new ArrayList<Task>();
+        for (Task task : taskArrayList) {
+            if (task.toString().contains(findStr)) {
+                foundTaskList.add(task);
+            }
+        }
+
+        if (foundTaskList.size() > 0) {
+            System.out.println("Here are the matching tasks in your list:");
+            listReply(foundTaskList);
+        }
+        else {
+            System.out.println("No match found!");
+        }
     }
 }
 
