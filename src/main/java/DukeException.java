@@ -9,7 +9,8 @@ public class DukeException extends Exception{
     }
 
     private static final String unknownErrText = "☹ OOPS!!! I'm sorry, but I don't know what that means :-(\n",
-                                knownCommands = "Please type one of these recognized commands:\nlist\ntodo\ndeadline\nevent\nbye",
+                                knownCommands = "Please type one of these recognized commands:\nlist\ndelete\n" +
+                                                                                    "todo\ndeadline\nevent\nbye",
                                 emptyErrText1 = "☹ OOPS!!! The description of a ",
                                 emptyDateErrText1 = "☹ OOPS!!! The date of a ",
                                 emptyErrText2 = " cannot be empty.";

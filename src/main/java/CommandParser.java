@@ -3,6 +3,7 @@ import java.util.Arrays;
 public class CommandParser {
     public enum commandType {
         LIST,
+        DELETE,
         QUIT,
         MARKDONE,
         TODO,
@@ -12,8 +13,8 @@ public class CommandParser {
         DEFAULT
     }
 
-    private static final String triggerListText = "list", triggerDoneText = "done",
-                                triggerQuitText = "bye", triggerTodoText = "todo",
+    private static final String triggerListText = "list", triggerDeleteText = "delete",
+                                triggerDoneText = "done", triggerQuitText = "bye", triggerTodoText = "todo",
                                 triggerDeadlineText = "deadline", triggerEventText = "event";
     public static final String splitDeadlineText = "/by ", splitEventText = "/at ";
 
@@ -52,6 +53,9 @@ public class CommandParser {
         }
         else if (command.equals(triggerListText)) {
             this.command = commandType.LIST;
+        }
+        else if (command.equals(triggerDeleteText)) {
+            this.command = commandType.DELETE;
         }
         else if (command.equals(triggerDoneText)) {
             this.command = commandType.MARKDONE;

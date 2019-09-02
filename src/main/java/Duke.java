@@ -8,12 +8,13 @@ public class Duke {
             + "| |_| | |_| |   <  __/\n"
             + "|____/ \\__,_|_|\\_\\___|\n";
 
-    private static final String welcomeMsg = "Hello from " + logo + "What can I do for you today?";
-    private static final String quitMsg = "Bye. Hope to see you again!\n" + logo;
-    private static final String markAsDoneMsg = "Nice! I've marked this task as done:\n";
-    private static final String taskAddedMsg = "Got it. I've added this task: \n";
-    private static final String numberOfTasksMsg_1 = "Now you have ", getNumberOfTaskMsg_2 = " task",
-                                getNumberOfTasksMsg_2 = " tasks", getGetNumberOfTasksMsg_3 = " in the list";
+    private static final String welcomeMsg = "Hello from " + logo + "What can I do for you today?",
+            quitMsg = "Bye. Hope to see you again!\n" + logo, markAsDoneMsg = "Nice! I've marked this task as done:\n",
+            taskAddedMsg = "Got it. I've added this task: \n", taskDeletedMsg = "Noted. I've removed this task:",
+            numberOfTasksMsg_1 = "Now you have ", getNumberOfTaskMsg_2 = " task", getNumberOfTasksMsg_2 = " tasks",
+            getGetNumberOfTasksMsg_3 = " in the list",
+            deleteTaskNotIntegerMsg = "Sorry! The index you entered was not an integer. Please try again.",
+            deleteTaskOutOfBoundsMsg = "Sorry! The task with that index does not exist. Please try again.";
 
     private static FileIOManager fileIOManager;
     private static ArrayList<Task> taskArrayList;
@@ -68,6 +69,9 @@ public class Duke {
             case LIST:
                 listReply();
                 break;
+            case DELETE:
+                deleteTask(commandArgs[0]);
+                break;
             case MARKDONE:
                 markReply(commandArgs[0]);
                 break;
@@ -97,9 +101,9 @@ public class Duke {
 
     public void addReply(Task task) {
         this.taskArrayList.add(task);
-        String taskText = (this.taskArrayList.size()>1) ? getNumberOfTasksMsg_2 : getNumberOfTaskMsg_2;
-        taskText = taskAddedMsg + task + "\n" + numberOfTasksMsg_1 + this.taskArrayList.size() + taskText + getGetNumberOfTasksMsg_3;
-        System.out.println(taskText);
+
+        System.out.println(taskAddedMsg + task);
+        System.out.println(getTasksLeftStr());
 
         fileIOManager.saveData(this.taskArrayList);
     }
@@ -111,6 +115,34 @@ public class Duke {
             currIndex += 1;
         }
     }
+
+    public void deleteTask(String indexStr) {
+        int index = 0;
+        try {
+            index = Integer.parseInt(indexStr);
+        }
+        catch (NumberFormatException e) {
+            System.out.println(e);
+            System.out.println(deleteTaskNotIntegerMsg);
+        }
+
+        // 0-index arrayList
+        index -= 1;
+
+        if (index >= taskArrayList.size() || index < 0) {
+            System.out.println("You have opted to remove task no. " + (index+1));
+            System.out.println(deleteTaskOutOfBoundsMsg);
+            System.out.println("Please enter index in range of 1 to " + taskArrayList.size() + " inclusive");
+        }
+        else {
+            System.out.println(taskDeletedMsg);
+            System.out.println(taskArrayList.get(index));
+            taskArrayList.remove(index);
+            System.out.println(getTasksLeftStr());
+            fileIOManager.saveData(this.taskArrayList);
+        }
+    }
+
     public void markReply(String indexStr) {
         if(indexStr.matches("^[0-9]+$")) {
             int index = Integer.parseInt(indexStr) - 1;
@@ -127,6 +159,11 @@ public class Duke {
         }
 
         fileIOManager.saveData(this.taskArrayList);
+    }
+
+    private String getTasksLeftStr() {
+        String taskText = (this.taskArrayList.size()>1) ? getNumberOfTasksMsg_2 : getNumberOfTaskMsg_2;
+        return numberOfTasksMsg_1 + this.taskArrayList.size() + taskText + getGetNumberOfTasksMsg_3;
     }
 }
 
