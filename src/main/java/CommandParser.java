@@ -9,13 +9,16 @@ public class CommandParser {
         TODO,
         DEADLINE,
         EVENT,
+        FIND,
         IGNORE,
         DEFAULT
     }
 
-    private static final String triggerListText = "list", triggerDeleteText = "delete",
-                                triggerDoneText = "done", triggerQuitText = "bye", triggerTodoText = "todo",
-                                triggerDeadlineText = "deadline", triggerEventText = "event";
+    private static final String triggerListText = "list", triggerDeleteText = "delete",triggerDoneText = "done",
+                                triggerQuitText = "bye", triggerTodoText = "todo",
+                                triggerDeadlineText = "deadline", triggerEventText = "event",
+                                triggerFindText = "find";
+
     public static final String splitDeadlineText = "/by ", splitEventText = "/at ";
 
     private String inputStr, splitText;
@@ -71,6 +74,9 @@ public class CommandParser {
             this.command = commandType.EVENT;
             this.splitText = splitEventText;
         }
+        else if (command.equals(triggerFindText)) {
+            this.command = commandType.FIND;
+        }
         else {
             throw new DukeException(DukeException.dukeExceptionType.UNKNOWN);
         }
@@ -96,6 +102,8 @@ public class CommandParser {
                 return "deadline";
             case EVENT:
                 return "event";
+            case FIND:
+                return "find";
             default:
                 return "unknown";
         }
