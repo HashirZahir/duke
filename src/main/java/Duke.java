@@ -2,13 +2,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
-    private static String logo = " ____        _        \n"
+    private static String logo = "\n ____        _        \n"
             + "|  _ \\ _   _| | _____ \n"
             + "| | | | | | | |/ / _ \\\n"
             + "| |_| | |_| |   <  __/\n"
             + "|____/ \\__,_|_|\\_\\___|\n";
 
-    private static final String welcomeMsg = "Hello from " + logo + "What can I do for you today?",
+    private static final String welcomeMsg = "Hello from" + logo + "What can I do for you today?",
             quitMsg = "Bye. Hope to see you again!\n" + logo, markAsDoneMsg = "Nice! I've marked this task as done:\n",
             taskAddedMsg = "Got it. I've added this task: \n", taskDeletedMsg = "Noted. I've removed this task:",
             numberOfTasksMsg_1 = "Now you have ", getNumberOfTaskMsg_2 = " task", getNumberOfTasksMsg_2 = " tasks",
@@ -127,6 +127,7 @@ public class Duke {
         catch (NumberFormatException e) {
             System.out.println(e);
             System.out.println(deleteTaskNotIntegerMsg);
+            return;
         }
 
         // 0-index arrayList
