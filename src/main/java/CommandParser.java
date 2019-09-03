@@ -142,6 +142,14 @@ public class CommandParser {
                 this.argStrArr = new String[]{argStr};
             }
         }
+        else if (this.command == commandType.MARKDONE) {
+            if(argStr.matches("^[0-9]+$")) {
+                this.argStrArr = new String[]{argStr};
+            }
+            else {
+                System.out.println("Improper 'Done' command given. Please follow: done [integer].\n example: done 2");
+            }
+        }
         else {
             this.argStrArr = new String[]{argStr};
         }
