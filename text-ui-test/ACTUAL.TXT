@@ -6,9 +6,66 @@ Hello from
 |____/ \__,_|_|\_\___|
 What can I do for you today?
 ______________________________________
-You have opted to remove task no. -1
-Sorry! The task with that index does not exist. Please try again.
-Please enter index in range of 1 to 2 inclusive
+☹ OOPS!!! I'm sorry, but I don't know what that means :-(
+Please type one of these recognized commands:
+list
+delete
+todo
+deadline
+event
+find
+bye
+______________________________________
+______________________________________
+
+______________________________________
+______________________________________
+Got it. I've added this task: 
+[T][✗] Buy Eggs
+Now you have 1 task in the list
+______________________________________
+______________________________________
+Got it. I've added this task: 
+[E][✗] Watch Movie (at: 12/04/2019 1450)
+Now you have 2 tasks in the list
+______________________________________
+______________________________________
+Got it. I've added this task: 
+[D][✗] Submit duke (by: 22/04/2019 2359)
+Now you have 3 tasks in the list
+______________________________________
+______________________________________
+1. [T][✗] Buy Eggs
+2. [E][✗] Watch Movie (at: 12/04/2019 1450)
+3. [D][✗] Submit duke (by: 22/04/2019 2359)
+
+______________________________________
+______________________________________
+Nice! I've marked this task as done:
+[D][✗] Submit duke (by: 22/04/2019 2359)
+______________________________________
+______________________________________
+No match found!
+______________________________________
+______________________________________
+Here are the matching tasks in your list:
+1. [D][✗] Submit duke (by: 22/04/2019 2359)
+
+______________________________________
+______________________________________
+Noted. I've removed this task:
+[D][✗] Submit duke (by: 22/04/2019 2359)
+Now you have 2 tasks in the list
+______________________________________
+______________________________________
+Noted. I've removed this task:
+[E][✓] Watch Movie (at: 12/04/2019 1450)
+Now you have 1 task in the list
+______________________________________
+______________________________________
+Noted. I've removed this task:
+[T][✗] Buy Eggs
+Now you have 0 task in the list
 ______________________________________
 ______________________________________
 Bye. Hope to see you again!

@@ -1,2 +1,13 @@
-delete -1
+help
+list
+todo Buy Eggs
+event Watch Movie /at 12/04/2019 1450
+deadline Submit duke /by 22/04/2019 2359
+list
+done 2
+find bread
+find duke
+delete 3
+delete 2
+delete 1
 bye
