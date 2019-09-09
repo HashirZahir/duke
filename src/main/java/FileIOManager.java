@@ -10,7 +10,9 @@ import java.util.Arrays;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-
+/**
+ * Class to handle file input/output (IO) operations.
+ */
 public class FileIOManager {
 
     private final String dukeFileLocationStr = "data/", dukeFileNameStr = "duke_tasks.txt",
@@ -22,6 +24,10 @@ public class FileIOManager {
 
     public FileIOManager() {}
 
+    /**
+     * Load the previously saved data from disk.
+     * @return Return array list of task objects from file.
+     */
     public ArrayList<Task> loadSavedData() {
         ArrayList<Task> taskArr = new ArrayList<Task>();
 
@@ -41,8 +47,11 @@ public class FileIOManager {
         return taskArr;
     }
 
+    /**
+     * Save list of tasks to file.
+     * @param taskArr Current list of tasks that need to be saved to file.
+     */
     public void saveData(ArrayList<Task> taskArr) {
-        boolean saveDataStatus = false;
         try {
             fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dukeFileStr)));
         }
@@ -64,6 +73,11 @@ public class FileIOManager {
 
     }
 
+    /**
+     * Get task object from string in file.
+     * @param inputStr A line of string from file.
+     * @return Task object representation of inputStr.
+     */
     private Task getTaskFromStr(String inputStr) {
         Task task;
         String[] splitStr = inputStr.split(fileCharRegex);
@@ -94,6 +108,11 @@ public class FileIOManager {
         return task;
     }
 
+    /**
+     * Get string to be saved to file from task object.
+     * @param t Task object to get string format of.
+     * @return String with separators to be stored in file to be recovered later.
+     */
     private String getStrFromTask(Task t) {
         String outStr = "";
         outStr += t.getTaskLetter() + fileCharText;

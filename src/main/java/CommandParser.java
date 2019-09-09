@@ -1,5 +1,8 @@
 import java.util.Arrays;
 
+/**
+ * Class to parse commands typed by the user and return relevant parts of input String.
+ */
 public class CommandParser {
     public enum commandType {
         LIST,
@@ -25,11 +28,18 @@ public class CommandParser {
     private String[] argStrArr;
     private commandType command;
 
+    /**
+     * Initialize CommandParser class with default command type and empty string.
+     */
     public CommandParser() {
         this.command = commandType.DEFAULT;
         this.splitText = " ";
     }
 
+    /**
+     * Set the input string to be parsed by the parser.
+     * @param inputStr input string to be parsed.
+     */
     public void setInputStr(String inputStr) {
         this.inputStr = inputStr;
 
@@ -42,6 +52,10 @@ public class CommandParser {
         }
     }
 
+    /**
+     * Splits the input string to find the command type.
+     * @throws DukeException Unknown input command string entered will throw exception.
+     */
     private void process() throws DukeException{
         String[] splitStr = this.inputStr.split(" ");
         String command = splitStr[0];
@@ -84,10 +98,18 @@ public class CommandParser {
         setArgs(restOfStr);
     }
 
+    /**
+     * Get the command type of the input string after processing.
+     * @return enum command type returned.
+     */
     public commandType getCommandType() {
        return this.command;
     }
 
+    /**
+     * Get the string output of the command type after processing.
+     * @return command type string.
+     */
     public String getCommandText() {
         switch(this.command) {
             case LIST:
@@ -109,6 +131,11 @@ public class CommandParser {
         }
     }
 
+    /**
+     * Parse any additional arguments after the command string.
+     * @param argStr additional string arguments to be parsed.
+     * @throws DukeException empty or wrong arguments will return exception .
+     */
     private void setArgs(String argStr) throws DukeException {
 
         if (this.command == commandType.DEADLINE || this.command == commandType.EVENT) {
@@ -157,6 +184,10 @@ public class CommandParser {
 
     }
 
+    /**
+     * Return all the parsed arguments.
+     * @return array of string arguments returned.
+     */
     public String[] getArgs() {
         return this.argStrArr;
     }
